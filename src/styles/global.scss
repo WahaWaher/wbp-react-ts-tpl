@@ -1,0 +1,29 @@
+body {
+  display: flex;
+  flex-direction: column;
+  color: #222;
+  background-color: #f5f5f5;
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.logo {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+}
+
+.outside-footer {
+  font-size: 12px;
+  background-color: #ededed;
+  padding: 5px 0;
+  margin-top: 15px;
+  img {
+    margin: 0 3px;
+  }
+}
