@@ -4,7 +4,7 @@ import styles from './App.module.scss';
 
 const App: FC = () => {
   const [{ title, content }, setState] = React.useState({
-    title: 'Webpack React Template 2021',
+    title: 'React TypeScript Template 2021',
     content: '...',
   });
 

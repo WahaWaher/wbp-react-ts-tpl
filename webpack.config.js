@@ -1,3 +1,4 @@
+const dotEnvFlow = require('dotenv-flow');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -5,6 +6,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { DefinePlugin } = require('webpack');
+const Handlebars = require('handlebars');
+const pkg = require('./package.json');
+
+dotEnvFlow.config();
 
 const { paths } = require('./utils/paths');
 const { isDev, isProd, mode } = require('./utils/mode');
@@ -120,11 +126,32 @@ module.exports = {
       },
       {
         test: /\.html$/i,
-        use: 'html-loader',
+        loader: 'html-loader',
+        options: {
+          preprocessor: async (content, loaderContext) => {
+            let res;
+
+            try {
+              res = await Handlebars.compile(content)({
+                pkg,
+                env: process.env,
+              });
+            } catch (err) {
+              await loaderContext.emitError(err);
+
+              return content;
+            }
+
+            return res;
+          },
+        },
       },
     ],
   },
   plugins: [
+    new DefinePlugin({
+      'process.env': JSON.stringify(process.env),
+    }),
     new MiniCssExtractPlugin({
       filename: isDev ? '[name].css' : 'css/[name].[contenthash:6].css',
     }),

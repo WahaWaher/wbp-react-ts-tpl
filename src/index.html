@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=5">
-  <title>React Template</title>
+  <title>React TypeScript Template {{ env.YEAR }}</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
 </head>
 <body>
   <div id="root"></div>
   <footer class="outside-footer">
     <div class="container d-flex align-items-center">
-      <span>WahaWaher</span>
+      <span>{{ pkg.name }} <sup>{{ pkg.version }}</sup></span>
       <img src="./img/webpack-logo.png" width="20" height="20" alt="logo">
-      <span>2021</span>
+      <span>{{ env.YEAR }}</span>
     </div>
   </footer>
 </body>
